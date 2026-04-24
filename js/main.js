@@ -17,7 +17,7 @@
             heroImages.push(`Banner/hero-${i}.jpg`);
         }
         const heroTexts = [
-            { title: "Premium Hair Transplant in China", subtitle: "Experience world-class hair restoration with Barley - China's pioneer and leader in microneedle hair transplant technology since 2006." },
+            { title: "Hair Transplant in China", subtitle: "Experience world-class hair restoration - China's pioneer and leader in microneedle hair transplant technology since 2006." },
             { title: "Natural Results That Last", subtitle: "With 30+ direct-operated clinics, 10+ patented technologies, and Sullivan-certified excellence, we deliver life-changing results for patients from around the globe." },
             { title: "Transform Your Look Today", subtitle: "Free consultation available in English! Contact us now to start your hair restoration journey." },
             { title: "Microneedle Technology Leader", subtitle: "Our revolutionary implant pen ensures 360° rotation for natural direction and minimal trauma." },
@@ -35,7 +35,7 @@
         const beforeAfterCaptions = [
             { title: "Amazing Transformation", desc: "Before and after comparison" },
             { title: "Natural Results", desc: "Real patient transformation" },
-            { title: "Confidence Restored", desc: "Life-changing results" },
+            { title: "Transformation Complete", desc: "Life-changing results" },
             { title: "Dramatic Improvement", desc: "Before and after photos" },
             { title: "Natural Looking", desc: "Professional hair restoration" },
             { title: "Perfect Density", desc: "Outstanding results" },
@@ -45,46 +45,7 @@
             { title: "Excellent Results", desc: "Before and after comparison" }
         ];
 
-        // Copy to clipboard function
-        function copyToClipboard(text, type) {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showCopyNotification(type);
-                }).catch(() => {
-                    fallbackCopyText(text, type);
-                });
-            } else {
-                fallbackCopyText(text, type);
-            }
-        }
 
-        function fallbackCopyText(text, type) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                showCopyNotification(type);
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        function showCopyNotification(type) {
-            const notification = document.getElementById('copyNotification');
-            const copyText = document.getElementById('copyText');
-            copyText.textContent = `${type} copied successfully!`;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
 
         // Doctor Patient Photos
         const doctorPatientPhotos = [];
@@ -96,7 +57,7 @@
             { title: "Grateful Patient", desc: "Celebrating fantastic results with our doctors" },
             { title: "Success Story", desc: "Another satisfied patient shares their joy" },
             { title: "Smile Restored", desc: "Patient with our specialist before discharge" },
-            { title: "Confidence Back", desc: "Happy patient with Dr. Chen post-treatment" },
+            { title: "Natural Look Restored", desc: "Happy patient with Dr. Chen post-treatment" },
             { title: "Life Changed", desc: "Excited patient showing their new look" },
             { title: "Thankful Patient", desc: "Grateful patient with our hair restoration expert" },
             { title: "New Journey", desc: "Patient celebrating successful procedure completion" },
@@ -121,7 +82,7 @@
             { title: "Treatment Room", desc: "Well-equipped and clean" },
             { title: "Doctor's Office", desc: "Professional workspace" },
             { title: "Clinic Interior", desc: "Modern and welcoming" },
-            { title: "Premium Facilities", desc: "Designed for your comfort" }
+            { title: "Modern Facilities", desc: "Designed for your comfort" }
         ];
 
         // Testimonials
@@ -180,7 +141,6 @@
                                 <h1>${text.title}</h1>
                                 <p>${text.subtitle}</p>
                                 <a href="contact.html" class="btn">Get Free Consultation</a>
-                                <a href="cases.html" class="btn btn-outline">View Cases</a>
                             </div>
                         </div>
                     </div>
@@ -427,6 +387,43 @@
             });
         }
 
+        // Hamburger Menu Toggle
+        function toggleHamburger() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('nav');
+            
+            if (hamburger && nav) {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+                
+                // Prevent scrolling when menu is open
+                document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+            }
+        }
+        
+        // Back to Top Button
+        function initBackToTop() {
+            const backToTopBtn = document.createElement('button');
+            backToTopBtn.className = 'back-to-top';
+            backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            document.body.appendChild(backToTopBtn);
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
         // Initialize all
         document.addEventListener('DOMContentLoaded', function() {
             renderHero();
@@ -436,6 +433,26 @@
             renderHospitalGallery();
             renderFAQ();
             initFAQCategories();
+            initBackToTop();
+            
+            // Add hamburger click listener
+            const hamburger = document.querySelector('.hamburger');
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleHamburger);
+            }
+            
+            // Close menu when clicking a link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    const hamburger = document.querySelector('.hamburger');
+                    const nav = document.querySelector('nav');
+                    if (hamburger && nav) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
         });
         
         // Auto-rotate hero (temporarily disabled)
