@@ -50,6 +50,36 @@
             height: 50px;
         }
         
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 10px;
+            z-index: 1001;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c3e50;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
         nav ul {
             display: flex;
             list-style: none;
@@ -65,6 +95,36 @@
         
         nav a:hover, nav a.active {
             color: #e74c3c;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 5px 20px rgba(231,76,60,0.3);
+            z-index: 999;
+            display: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231,76,60,0.4);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Hero Section */
@@ -995,14 +1055,51 @@
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                gap: 15px;
+                flex-direction: row;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 60%;
+                max-width: 240px;
+                height: 100vh;
+                background: white;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                padding-top: 70px;
+                z-index: 1000;
+            }
+            
+            nav.active {
+                right: 0;
             }
             
             nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 15px;
+            }
+            
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+                display: block;
+            }
+            
+            .back-to-top {
+                display: none !important;
             }
             
             .hero-slide {
@@ -1019,6 +1116,24 @@
             
             .about-grid, .tech-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-top: 30px;
+            }
+            
+            .stat-box {
+                padding: 18px;
+            }
+            
+            .stat-box h3 {
+                font-size: 26px;
+            }
+            
+            .stat-box p {
+                font-size: 13px;
             }
             
             .section-title h2 {
